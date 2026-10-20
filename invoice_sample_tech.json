@@ -1,0 +1,28 @@
+{
+  "vendor_name": "Apex Tech Global Distributors",
+  "invoice_number": "INV-AT-4491",
+  "invoice_date": "2026-10-20",
+  "subtotal": 1065.00,
+  "tax_amount": 85.20,
+  "total_amount": 1150.20,
+  "items": [
+    {
+      "description": "Wireless Ergonomic Mouse Pro",
+      "quantity": 30,
+      "unit_price": 13.50,
+      "total_price": 405.00
+    },
+    {
+      "description": "USB-C Braided Fast Cable (2m)",
+      "quantity": 40,
+      "unit_price": 4.50,
+      "total_price": 180.00
+    },
+    {
+      "description": "Mechanical RGB Gaming Keyboard",
+      "quantity": 15,
+      "unit_price": 32.00,
+      "total_price": 480.00
+    }
+  ]
+}

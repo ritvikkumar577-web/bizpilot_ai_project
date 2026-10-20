@@ -1,0 +1,22 @@
+{
+  "vendor_name": "GreenValley Roasters Inc.",
+  "invoice_number": "INV-GVR-9912",
+  "invoice_date": "2026-10-19",
+  "subtotal": 431.50,
+  "tax_amount": 34.52,
+  "total_amount": 466.02,
+  "items": [
+    {
+      "description": "Organic Arabica Coffee Beans (1kg)",
+      "quantity": 25,
+      "unit_price": 11.50,
+      "total_price": 287.50
+    },
+    {
+      "description": "Colombian Supremo Ground (500g)",
+      "quantity": 20,
+      "unit_price": 7.20,
+      "total_price": 144.00
+    }
+  ]
+}

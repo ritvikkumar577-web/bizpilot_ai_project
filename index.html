@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BizPilot AI — Automated Invoices, Inventory & Business Intelligence</title>
+  <meta name="description" content="AI-powered application helping small businesses automatically scan invoices, manage inventory, forecast stockouts, and query intelligent business analytics.">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Left Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="brand-section">
+      <div class="brand-logo">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">BizPilot AI</div>
+        <span class="brand-badge">Smart Operations</span>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <div class="nav-label">Core Modules</div>
+      
+      <a class="nav-item active" data-tab="dashboard">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="nav-item" data-tab="invoices">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <span>Invoices</span>
+        <span class="nav-badge" id="invoices-badge" style="display:none;">0</span>
+      </a>
+
+      <a class="nav-item" data-tab="inventory">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+        <span>Inventory</span>
+      </a>
+
+      <a class="nav-item" data-tab="alerts">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+        <span>Alerts</span>
+        <span class="nav-badge" id="alerts-badge">0</span>
+      </a>
+
+      <div class="nav-label" style="margin-top:16px;">AI Intelligence</div>
+
+      <a class="nav-item" data-tab="ai">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+        <span>AI Assistant</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar Footer Engine Status -->
+    <div class="sidebar-footer">
+      <div class="system-status-card">
+        <div class="status-indicator-row">
+          <span class="pulse-dot" id="backend-status-pill"></span>
+          <span id="backend-status-text" style="font-weight:600; font-size:0.78rem;">Autonomous AI Engine</span>
+        </div>
+        <div style="font-size:0.72rem; color:var(--text-dim);">
+          PostgreSQL / SQLite Dual Engine Ready
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Viewport -->
+  <main class="main-wrapper">
+    <!-- Top Navbar -->
+    <header class="top-navbar">
+      <div class="top-search-box">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--text-dim);">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input type="text" id="global-search-input" placeholder="Search products, SKUs, bills, or suppliers...">
+      </div>
+
+      <div class="top-actions">
+        <button class="btn btn-secondary" onclick="window.app.switchTab('invoices')">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+          Upload Bill
+        </button>
+
+        <button class="btn btn-emerald" onclick="window.BizPilotInventory.openAddModal()">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Add Product
+        </button>
+
+        <button class="btn btn-primary" onclick="window.app.switchTab('ai')">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          BizPilot AI
+        </button>
+
+        <button class="btn btn-secondary" onclick="window.downloadProjectZip()" title="Download entire project as a ZIP package">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--accent-emerald);">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Download ZIP
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Workspace Body -->
+    <div class="content-body">
+      
+      <!-- ============================================================== -->
+      <!-- TAB 1: DASHBOARD                                               -->
+      <!-- ============================================================== -->
+      <section class="tab-pane active" id="tab-dashboard">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Executive Overview 🚀</h1>
+            <p class="page-subtitle">Real-time inventory valuation, stock health metrics, and automated invoice tracking.</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary" onclick="window.app.switchTab('ai')">
+              🤖 Ask Assistant
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="grid-4">
+          <!-- KPI 1 -->
+          <div class="stat-card emerald">
+            <div class="stat-top">
+              <span class="stat-label">Inventory Asset Value</span>
+              <div class="stat-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-stock-value">$0.00</div>
+            <div class="stat-footer">
+              <span class="stat-trend up" id="kpi-retail-margin">+0.0% projected margin</span>
+            </div>
+          </div>
+
+          <!-- KPI 2 -->
+          <div class="stat-card indigo">
+            <div class="stat-top">
+              <span class="stat-label">Catalog Health Score</span>
+              <div class="stat-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-health-score">100%</div>
+            <div class="stat-footer" id="kpi-health-breakdown">
+              Evaluating safety stock...
+            </div>
+          </div>
+
+          <!-- KPI 3 -->
+          <div class="stat-card amber">
+            <div class="stat-top">
+              <span class="stat-label">Approved Invoice Spend</span>
+              <div class="stat-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-invoices-spend">$0.00</div>
+            <div class="stat-footer">
+              <span class="stat-trend neutral" id="kpi-pending-invoices">0 pending approval</span>
+            </div>
+          </div>
+
+          <!-- KPI 4 -->
+          <div class="stat-card rose">
+            <div class="stat-top">
+              <span class="stat-label">Active Stock Alerts</span>
+              <div class="stat-icon">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value" id="kpi-active-alerts">0</div>
+            <div class="stat-footer">
+              <span class="stat-trend down" id="kpi-critical-alerts">0 critical stockouts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Column Section: Category Distribution + Urgent Restock Radar -->
+        <div class="grid-2-1">
+          <!-- Left: Category Distribution Chart -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                </svg>
+                Inventory Volume by Category
+              </div>
+              <span class="badge badge-info">Real-time Stock</span>
+            </div>
+            <div id="dashboard-chart-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Right: Urgent Restock Radar -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Restock Radar
+              </div>
+              <button class="btn btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="window.app.switchTab('alerts')">View All</button>
+            </div>
+            <div id="restock-radar-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Invoices Row -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Recent Invoices & Automated Extractions
+            </div>
+            <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.75rem;" onclick="window.app.switchTab('invoices')">Manage Bills</button>
+          </div>
+          <div id="recent-invoices-feed">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 2: INVOICES & OCR SCANNER                                  -->
+      <!-- ============================================================== -->
+      <section class="tab-pane" id="tab-invoices">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Invoice Processing & AI OCR 🧾</h1>
+            <p class="page-subtitle">Upload supplier bills. BizPilot AI extracts line items and automatically updates warehouse stock upon approval.</p>
+          </div>
+        </div>
+
+        <!-- OCR Dropzone with Laser Scanner Effect -->
+        <div class="card" style="margin-bottom:28px;">
+          <div class="ocr-dropzone" id="invoice-dropzone">
+            <div class="scan-beam" id="ocr-scan-beam"></div>
+            <div class="dropzone-icon-box">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+            </div>
+            <h3 style="font-size:1.25rem; font-weight:700; color:#fff;">Drag & Drop Supplier Invoice / Bill</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-top:6px;" id="ocr-scan-status">
+              Supports PNG, JPG, WebP, PDF or JSON. AI extracts Vendor, Quantities, Unit Costs, and Totals.
+            </p>
+            <input type="file" id="invoice-file-input" style="display:none;" accept="image/*,application/pdf,.json">
+
+            <!-- One-Click Instant Sample Bill Tester -->
+            <div class="sample-bills-bar">
+              <span style="font-size:0.78rem; color:var(--text-dim); text-transform:uppercase; font-weight:700;">Or Test With Sample Bill:</span>
+              <button class="sample-bill-btn" onclick="window.BizPilotInvoices.loadSampleBill(0); event.stopPropagation();">
+                ⚡ Tech Hardware Bill
+              </button>
+              <button class="sample-bill-btn" onclick="window.BizPilotInvoices.loadSampleBill(1); event.stopPropagation();">
+                ☕ Coffee Roastery Bill
+              </button>
+              <button class="sample-bill-btn" onclick="window.BizPilotInvoices.loadSampleBill(2); event.stopPropagation();">
+                📦 Packaging Supplies
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scanned Invoice Preview (Appears when file is parsed) -->
+        <div id="scanned-invoice-preview" style="display:none; margin-bottom:28px;"></div>
+
+        <!-- Invoices Audit Trail Table -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Invoice History & Stock Audit Log
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Vendor</th>
+                  <th>Date</th>
+                  <th>Line Items</th>
+                  <th>Total Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="invoices-table-body">
+                <!-- Populated via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 3: INVENTORY                                               -->
+      <!-- ============================================================== -->
+      <section class="tab-pane" id="tab-inventory">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Inventory Catalog 📦</h1>
+            <p class="page-subtitle">Track stock counts, minimum thresholds, cost margins, and adjust quantities on the fly.</p>
+          </div>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-emerald" onclick="window.BizPilotInventory.openAddModal()">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              Add Product
+            </button>
+          </div>
+        </div>
+
+        <!-- Inventory Filter Bar & Summary -->
+        <div class="card" style="padding:16px 20px; margin-bottom:24px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Category:</span>
+              <select id="inventory-category-select" class="form-select" style="width:auto; min-width:140px; padding:6px 12px; font-size:0.85rem;">
+                <option value="All">All Categories</option>
+              </select>
+
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; margin-left:12px;">Status:</span>
+              <button class="btn btn-secondary stock-filter-pill active" data-filter="All" style="padding:5px 12px; font-size:0.8rem;" onclick="window.BizPilotInventory.setStockFilter('All')">All</button>
+              <button class="btn btn-secondary stock-filter-pill" data-filter="healthy" style="padding:5px 12px; font-size:0.8rem;" onclick="window.BizPilotInventory.setStockFilter('healthy')">Healthy</button>
+              <button class="btn btn-secondary stock-filter-pill" data-filter="low" style="padding:5px 12px; font-size:0.8rem;" onclick="window.BizPilotInventory.setStockFilter('low')">Low Stock</button>
+              <button class="btn btn-secondary stock-filter-pill" data-filter="out" style="padding:5px 12px; font-size:0.8rem;" onclick="window.BizPilotInventory.setStockFilter('out')">Out of Stock</button>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:16px; font-size:0.88rem;">
+              <div style="color:var(--text-muted);">Total Value: <strong style="color:var(--accent-emerald);" id="inv-summary-val">$0.00</strong></div>
+              <div style="color:var(--text-dim);" id="inv-summary-count">0 units</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="card">
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>SKU</th>
+                  <th>Category</th>
+                  <th>Stock Health</th>
+                  <th>Quick Adjust</th>
+                  <th>Pricing & Margin</th>
+                  <th>Status & Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table-body">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 4: SMART ALERTS                                            -->
+      <!-- ============================================================== -->
+      <section class="tab-pane" id="tab-alerts">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Smart Alerts & Replenishment 🚨</h1>
+            <p class="page-subtitle">Deterministic rule-based stock alerts calculating exact replenishment quantities and drafting purchase orders.</p>
+          </div>
+          <div style="display:flex; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px; font-size:0.88rem; background:var(--bg-surface); padding:6px 14px; border-radius:var(--radius-full); border:1px solid var(--border-subtle);">
+              <span class="badge badge-danger" id="alerts-crit-count">0 Urgent</span>
+              <span class="badge badge-warning" id="alerts-warn-count">0 Low Stock</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Chips -->
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+          <button class="btn btn-primary alert-tab-btn" data-filter="all" onclick="window.BizPilotAlerts.setAlertFilter('all')">All Active Alerts</button>
+          <button class="btn btn-secondary alert-tab-btn" data-filter="critical" onclick="window.BizPilotAlerts.setAlertFilter('critical')">Critical Stockouts</button>
+          <button class="btn btn-secondary alert-tab-btn" data-filter="warning" onclick="window.BizPilotAlerts.setAlertFilter('warning')">Low Warnings</button>
+        </div>
+
+        <div id="alerts-cards-container">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 5: AI BUSINESS ASSISTANT                                   -->
+      <!-- ============================================================== -->
+      <section class="tab-pane" id="tab-ai">
+        <div class="ai-assistant-card">
+          <!-- AI Chat Header -->
+          <div class="ai-chat-header">
+            <div class="ai-chat-header-info">
+              <div class="ai-avatar">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <h3 style="font-size:1.1rem; font-weight:700;">BizPilot AI Business Copilot</h3>
+                <div style="font-size:0.8rem; color:var(--accent-emerald); display:flex; align-items:center; gap:6px;">
+                  <span class="pulse-dot"></span> Live visibility into inventory, invoices, and supplier terms
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-secondary" style="padding:6px 12px; font-size:0.8rem;" onclick="window.BizPilotAI.chatHistory = []; window.BizPilotAI.render();">
+              Clear Conversation
+            </button>
+          </div>
+
+          <!-- Message Bubbles Stream -->
+          <div class="chat-messages-container" id="ai-chat-messages">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Quick Suggestion Prompt Chips -->
+          <div class="chat-quick-chips">
+            <button class="chip-btn" onclick="window.BizPilotAI.askPrompt('Which products are running low?')">
+              ⚠️ Which products are running low?
+            </button>
+            <button class="chip-btn" onclick="window.BizPilotAI.askPrompt('What is our total inventory holding value?')">
+              📊 Total inventory valuation & margins
+            </button>
+            <button class="chip-btn" onclick="window.BizPilotAI.askPrompt('Show me pending invoices that need review')">
+              🧾 Pending invoices status
+            </button>
+            <button class="chip-btn" onclick="window.BizPilotAI.askPrompt('Draft a restock order for depleted items')">
+              📦 Draft restock order
+            </button>
+          </div>
+
+          <!-- Chat Input Bar -->
+          <div class="chat-input-bar">
+            <input type="text" id="ai-chat-input" placeholder="Ask BizPilot AI anything about your inventory, stockouts, invoices...">
+            <button class="btn btn-primary" id="ai-chat-send-btn">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+              Send
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ================================================================== -->
+<!-- MODALS                                                             -->
+<!-- ================================================================== -->
+
+<!-- Modal 1: Add Product Modal -->
+<div class="modal-overlay" id="add-product-modal">
+  <div class="modal-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+      <h3 style="font-size:1.25rem; font-weight:700;">Add New Product to Catalog</h3>
+      <button class="btn-qty" onclick="window.BizPilotInventory.closeAddModal()">✕</button>
+    </div>
+
+    <form id="add-product-form" onsubmit="window.BizPilotInventory.handleSaveNewProduct(event)">
+      <div class="form-group">
+        <label class="form-label">Product Name *</label>
+        <input type="text" id="new-prod-name" class="form-input" placeholder="e.g. Ergonomic Office Desk Mat" required>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" class="form-group">
+        <div>
+          <label class="form-label">SKU Code *</label>
+          <input type="text" id="new-prod-sku" class="form-input" placeholder="e.g. SKU-OFF-902" required>
+        </div>
+        <div>
+          <label class="form-label">Category</label>
+          <input type="text" id="new-prod-cat" class="form-input" placeholder="e.g. Electronics, Office, Packaging">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" class="form-group">
+        <div>
+          <label class="form-label">Initial Stock Count</label>
+          <input type="number" id="new-prod-stock" class="form-input" value="15" min="0">
+        </div>
+        <div>
+          <label class="form-label">Min Alert Threshold</label>
+          <input type="number" id="new-prod-min" class="form-input" value="10" min="1">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" class="form-group">
+        <div>
+          <label class="form-label">Cost Price ($)</label>
+          <input type="number" step="0.01" id="new-prod-cost" class="form-input" placeholder="8.50">
+        </div>
+        <div>
+          <label class="form-label">Selling Price ($)</label>
+          <input type="number" step="0.01" id="new-prod-sell" class="form-input" placeholder="19.99">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Primary Supplier</label>
+        <input type="text" id="new-prod-supplier" class="form-input" placeholder="e.g. Apex Tech Global">
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+        <button type="button" class="btn btn-secondary" onclick="window.BizPilotInventory.closeAddModal()">Cancel</button>
+        <button type="submit" class="btn btn-emerald">Save Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal 2: Quick Purchase Order Modal -->
+<div class="modal-overlay" id="po-modal">
+  <div class="modal-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h3 style="font-size:1.25rem; font-weight:700;">Purchase Order Draft</h3>
+      <button class="btn-qty" onclick="window.BizPilotAlerts.closePOModal()">✕</button>
+    </div>
+    <div id="po-modal-content">
+      <!-- Dynamically filled -->
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notifications Container -->
+<div id="toast-container"></div>
+
+<!-- Application Scripts in Dependency Order -->
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/invoices.js"></script>
+<script src="js/inventory.js"></script>
+<script src="js/alerts.js"></script>
+<script src="js/ai-chat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="js/zip-downloader.js"></script>
+
+</body>
+</html>
