@@ -1,0 +1,24 @@
+{
+  "name": "bizpilot-ai",
+  "version": "1.0.0",
+  "description": "BizPilot AI is an intelligent web and API platform that empowers small businesses to automate supplier invoice processing, maintain real-time inventory counts, anticipate stockouts with deterministic rules, and query business intelligence using conversational AI.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "python main.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritvikkumar577-web/bizpilot_ai_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ritvikkumar577-web/bizpilot_ai_project/issues"
+  },
+  "homepage": "https://github.com/ritvikkumar577-web/bizpilot_ai_project#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
